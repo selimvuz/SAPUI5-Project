@@ -1,0 +1,104 @@
+<mvc:View
+    controllerName="com.smod.ux.todolist.controller.List"
+    xmlns:mvc="sap.ui.core.mvc"
+    displayBlock="true"
+    xmlns="sap.m"
+    xmlns:f="sap.f"
+    xmlns:card="sap.f.cards"
+    xmlns:l="sap.ui.layout"
+>
+    <Page
+        id="page"
+        title="{i18n>title}"
+        showNavButton="true"
+        titleAlignment="Center"
+        floatingFooter="true"
+        busy="{listViewModel>/busy}"
+        busyIndicatorDelay="0"
+    >
+        <content>
+            <!-- <Text text="{listViewModel>/name} {listViewModel>/surname}" />
+            <Input value="{listViewModel>/name}" valueLiveUpdate="true"/>
+            <Input value="{listViewModel>/surname}" valueLiveUpdate="false"/> -->
+            <!-- <CheckBox selected="{listViewModel>/visible}"/> -->
+            <!-- <Table items="{path:'listViewModel>/selectedEmployee', templateShareable: false}" 
+            >
+                <columns>
+                     <Column>
+                        <Title text="Çalışan" />
+                    </Column>
+                </columns>
+                <items>
+                    <ColumnListItem >
+                        <cells>
+                            <ObjectIdentifier text="{listViewModel>id}" title="{listViewModel>name} {listViewModel>surname}" />
+                        </cells>
+                    </ColumnListItem>
+                </items>
+            </Table> -->
+            
+            <Table id="idProjectList" items="{path:'/ProjectSet', templateShareable: false}" 
+            >
+                <headerToolbar>
+                    <Toolbar>
+                        <Title text="{i18n>projects}" />
+                        <ToolbarSpacer/>
+                        <SearchField  placeholder="{i18n>PROJECT_SEARCH_PLACEHOLDER}"
+                        width="{= ${device>/system/phone} ? '200px' : '50%' }"
+                            value="{listViewModel>/queryString}"
+                            search=".onSearchProject" 
+                        />
+                    </Toolbar>
+                </headerToolbar>
+                <columns>
+                    <Column>
+                        <Title text="Proje" />
+                    </Column>
+                
+                </columns>
+                <items>
+                    <ColumnListItem type="Navigation" press=".onNavToDetailPage">
+                        <cells>
+                            <ObjectIdentifier title="{ProjectId}" text="{ProjectDescription}" />
+                        
+                        </cells>
+                    </ColumnListItem>
+                </items>
+            </Table>
+            <!-- <SearchField class="customSearchBar" placeholder="Aramak için anahtar kelime giriniz" search=".onSearchProjects" />
+            <l:Grid content="{/ProjectSet}">
+                <l:content>
+                    <f:Card
+                        
+                        
+                    >
+                        <f:header>
+                            <card:Header
+                                title="{ProjectDescription}"
+                                statusText="{ProjectId}"
+                            />
+                        </f:header>
+                        <f:content>
+                            <Text
+                                text="{ProjectDescription}"
+                                class="sapUiMediumMargin"
+                            />
+                        </f:content>
+                    </f:Card>
+                </l:content>
+            </l:Grid> -->
+        </content>
+
+        <footer>
+            <OverflowToolbar>
+                <ToolbarSpacer/>
+                <Button
+                    text="Refresh"
+                    icon="sap-icon://refresh"
+                    type="Emphasized"
+                    press=".onRefreshList"
+                />
+            </OverflowToolbar>
+        </footer>
+    </Page>
+</mvc:View>

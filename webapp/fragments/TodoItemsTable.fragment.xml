@@ -1,0 +1,48 @@
+<core:FragmentDefinition
+    xmlns:core="sap.ui.core"
+    xmlns="sap.m"
+>
+    <Table id="idTodoItemsTable" items="{path:'TodoItemSet'}">
+        <headerToolbar>
+            <Toolbar>
+                <Label text="{ProjectDescription}" />
+                <ToolbarSpacer />
+                <Button icon="sap-icon://add-activity-2" text="{i18n>ADD_ACTION}" press=".onAddNewTodo"
+                    type="Emphasized"
+                />
+            </Toolbar>
+        </headerToolbar>
+        <columns>
+            <Column >
+                <Label text="{i18n>TODO_ITEM_ID}" />
+            </Column>
+            <Column demandPopin="true" minScreenWidth="Tablet" popinDisplay="Inline">
+                <Label text="{i18n>TODO_ITEM_STATUS}" />
+            </Column>
+            <Column hAlign="Center">
+                <Label text="{i18n>ACTIONS}" />
+            </Column>
+        </columns>
+        <items>
+            <ColumnListItem
+                type="Inactive"
+            >
+                <cells>
+                    <ObjectIdentifier
+                        title="{ItemId}"
+                        text="{ItemDescription}"
+                    />
+                    <ObjectStatus text="{ItemStatusText}" 
+                    state="{path:'ItemStatus', formatter: '.formatter.getTodoItemState'}"
+                    icon="{= ${ItemStatus} === 'NS' ? 'sap-icon://status-critical' : null }"
+                    />
+                    <HBox alignItems="Center" justifyContent="Center" > 
+                        <Button icon="sap-icon://delete" type="Reject" press=".onDeleteTodo" class="sapUiTinyMarginEnd"/>
+                        <Button icon="sap-icon://edit" type="Accept" press=".onEditTodo"/>
+                    </HBox>
+                    <!-- state="{= ${ItemStatus} === 'NS' ? 'Warning' : ${ItemStatus} === 'IP' ? 'Success' : 'Error' }" -->
+                </cells>
+            </ColumnListItem>
+        </items>
+    </Table>
+</core:FragmentDefinition>

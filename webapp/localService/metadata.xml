@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="1.0" xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:sap="http://www.sap.com/Protocols/SAPData">
+    <edmx:DataServices m:DataServiceVersion="2.0">
+        <Schema Namespace="ZBC_UX_TODO_BD_SRV" xml:lang="tr" sap:schema-version="1" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+            <EntityType Name="Project" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="ProjectId"/>
+                </Key>
+                <Property Name="ProjectId" Type="Edm.String" Nullable="false" MaxLength="5" sap:unicode="false" sap:label="Proje no"/>
+                <Property Name="ProjectDescription" Type="Edm.String" MaxLength="50" sap:unicode="false" sap:label="Proje tanımı"/>
+                <Property Name="BeginDate" Type="Edm.DateTime" Precision="7" sap:unicode="false" sap:label="Gçrl.bşl."/>
+                <Property Name="EndDate" Type="Edm.DateTime" Precision="7" sap:unicode="false" sap:label="Gçrl.sonu"/>
+                <NavigationProperty Name="TodoItemSet" Relationship="ZBC_UX_TODO_BD_SRV.ProjectToTodoItemAss" FromRole="FromRole_ProjectToTodoItemAss" ToRole="ToRole_ProjectToTodoItemAss"/>
+            </EntityType>
+            <EntityType Name="TodoItem" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="ProjectId"/>
+                    <PropertyRef Name="ItemId"/>
+                </Key>
+                <Property Name="ProjectId" Type="Edm.String" Nullable="false" MaxLength="5" sap:unicode="false" sap:label="Proje no"/>
+                <Property Name="ItemId" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="İş no"/>
+                <Property Name="ProjectDescription" Type="Edm.String" MaxLength="50" sap:unicode="false" sap:label="Proje tanımı"/>
+                <Property Name="ItemDescription" Type="Edm.String" MaxLength="50" sap:unicode="false" sap:label="Yapılacak iş tanımı"/>
+                <Property Name="ItemStatus" Type="Edm.String" MaxLength="2" sap:unicode="false" sap:label="İş durumu"/>
+                <Property Name="ItemStatusText" Type="Edm.String" MaxLength="60" sap:unicode="false" sap:label="Kısa tanım"/>
+                <Property Name="Username" Type="Edm.String" MaxLength="12" sap:unicode="false" sap:label="Kullanıcı"/>
+                <Property Name="Category" Type="Edm.String" MaxLength="2" sap:unicode="false" sap:label="Kategori"/>
+                <Property Name="CategoryDescription" Type="Edm.String" MaxLength="60" sap:unicode="false" sap:label="Kategori tanımı"/>
+            </EntityType>
+            <EntityType Name="ValueHelp" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="FieldName"/>
+                    <PropertyRef Name="FieldKey"/>
+                </Key>
+                <Property Name="FieldName" Type="Edm.String" Nullable="false" MaxLength="30" sap:unicode="false" sap:label="Alan adı"/>
+                <Property Name="FieldKey" Type="Edm.String" Nullable="false" sap:unicode="false" sap:label="Anahtar"/>
+                <Property Name="FieldValue" Type="Edm.String" sap:unicode="false" sap:label="Değer"/>
+                <Property Name="Query" Type="Edm.String" sap:unicode="false" sap:label="Sorgu alanı"/>
+            </EntityType>
+            <Association Name="ProjectToTodoItemAss" sap:content-version="1">
+                <End Type="ZBC_UX_TODO_BD_SRV.Project" Multiplicity="1" Role="FromRole_ProjectToTodoItemAss"/>
+                <End Type="ZBC_UX_TODO_BD_SRV.TodoItem" Multiplicity="*" Role="ToRole_ProjectToTodoItemAss"/>
+                <ReferentialConstraint>
+                    <Principal Role="FromRole_ProjectToTodoItemAss">
+                        <PropertyRef Name="ProjectId"/>
+                    </Principal>
+                    <Dependent Role="ToRole_ProjectToTodoItemAss">
+                        <PropertyRef Name="ProjectId"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <EntityContainer Name="ZBC_UX_TODO_BD_SRV_Entities" m:IsDefaultEntityContainer="true" sap:supported-formats="atom json xlsx">
+                <EntitySet Name="ProjectSet" EntityType="ZBC_UX_TODO_BD_SRV.Project" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <EntitySet Name="TodoItemSet" EntityType="ZBC_UX_TODO_BD_SRV.TodoItem" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <EntitySet Name="ValueHelpSet" EntityType="ZBC_UX_TODO_BD_SRV.ValueHelp" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <AssociationSet Name="ProjectToTodoItemAssSet" Association="ZBC_UX_TODO_BD_SRV.ProjectToTodoItemAss" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="ProjectSet" Role="FromRole_ProjectToTodoItemAss"/>
+                    <End EntitySet="TodoItemSet" Role="ToRole_ProjectToTodoItemAss"/>
+                </AssociationSet>
+            </EntityContainer>
+            <atom:link rel="self" href="http://smod-erp-dev1.westeurope.cloudapp.azure.com:8010/sap/opu/odata/sap/ZBC_UX_TODO_BD_SRV/$metadata" xmlns:atom="http://www.w3.org/2005/Atom"/>
+            <atom:link rel="latest-version" href="http://smod-erp-dev1.westeurope.cloudapp.azure.com:8010/sap/opu/odata/sap/ZBC_UX_TODO_BD_SRV/$metadata" xmlns:atom="http://www.w3.org/2005/Atom"/>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>
