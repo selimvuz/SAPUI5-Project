@@ -27,7 +27,6 @@
   },
   "sapuxLayer": "CUSTOMER_BASE",
   "dependencies": {
-    "rimraf": "^6.0.1",
-    "todo-list": "file:"
+    "rimraf": "^6.0.1"
   }
 }
