@@ -88,33 +88,42 @@
                 </l:content>
             </l:Grid> -->
 
-            <Table id="exampleODATA" items="{path:'/ProjectSet', templateShareable: false}" 
-            >
+            <Table> 
                 <headerToolbar>
                     <Toolbar>
-                        <Title text="{i18n>exampleTitle}" />
+                        <Title text="{i18n>projectsExp}" />
                         <ToolbarSpacer/>
-                        <SearchField  placeholder="{i18n>INSTANCE_SEARCH_PLACEHOLDER}"
-                        width="{= ${device>/system/phone} ? '200px' : '50%' }"
-                            value="{listViewModel>/queryString}"
-                            search=".onSearchProject" 
-                        />
                     </Toolbar>
                 </headerToolbar>
                 <columns>
                     <Column>
-                        <Title text="Proje" />
+                        <Text text="Proje Bilgisi"/>
                     </Column>
-                
+                    <Column>
+                        <Text text="Detaylar"/>
+                    </Column>
                 </columns>
+
                 <items>
-                    <ColumnListItem type="Navigation" press=".onNavToDetailPage">
+                    <ColumnListItem>
                         <cells>
-                            <ObjectIdentifier title="{ProjectId}" text="{ProjectDescription}" />
-                        
+                            <VBox>
+                                <items>
+                                    <ObjectIdentifier title="Proje 1" text="Açıklama 123" />
+                                </items>
+                            </VBox>
+                        </cells>
+                        <cells>
+                            <VBox>
+                                <items>
+                                    <ObjectIdentifier id="firstCell" title="Başlangıç Tarihi:" text="22.10.2025" />
+                                    <ObjectIdentifier title="Bitiş Tarihi:" text="21.10.2026"/>
+                                </items>
+                            </VBox>
                         </cells>
                     </ColumnListItem>
                 </items>
+
             </Table>
         </content>
 
