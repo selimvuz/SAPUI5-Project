@@ -87,6 +87,35 @@
                     </f:Card>
                 </l:content>
             </l:Grid> -->
+
+            <Table id="exampleODATA" items="{path:'/ProjectSet', templateShareable: false}" 
+            >
+                <headerToolbar>
+                    <Toolbar>
+                        <Title text="{i18n>exampleTitle}" />
+                        <ToolbarSpacer/>
+                        <SearchField  placeholder="{i18n>INSTANCE_SEARCH_PLACEHOLDER}"
+                        width="{= ${device>/system/phone} ? '200px' : '50%' }"
+                            value="{listViewModel>/queryString}"
+                            search=".onSearchProject" 
+                        />
+                    </Toolbar>
+                </headerToolbar>
+                <columns>
+                    <Column>
+                        <Title text="Proje" />
+                    </Column>
+                
+                </columns>
+                <items>
+                    <ColumnListItem type="Navigation" press=".onNavToDetailPage">
+                        <cells>
+                            <ObjectIdentifier title="{ProjectId}" text="{ProjectDescription}" />
+                        
+                        </cells>
+                    </ColumnListItem>
+                </items>
+            </Table>
         </content>
 
         <footer>

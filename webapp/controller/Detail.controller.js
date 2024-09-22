@@ -31,7 +31,7 @@ sap.ui.define(
       onInit: function () {
         const oViewModel = new JSONModel({
           todoItem: this._initiateTodoItem(),
-          todoItemValidation:this._initiateTodoItemValidation()
+          todoItemValidation: this._initiateTodoItemValidation(),
         });
 
         this.getView().setModel(oViewModel, "detailViewModel");
@@ -89,17 +89,32 @@ sap.ui.define(
 
         this._resetTodoItemValidation();
 
-        if(oTodoItem.ItemDescription?.trim() === "" || oTodoItem.ItemDescription === null){
-            oViewModel.setProperty("/todoItemValidation/ItemDescription/ValueState","Error");
+        if (
+          oTodoItem.ItemDescription?.trim() === "" ||
+          oTodoItem.ItemDescription === null
+        ) {
+          oViewModel.setProperty(
+            "/todoItemValidation/ItemDescription/ValueState",
+            "Error"
+          );
         }
-        if(oTodoItem.ItemStatus === null){
-            oViewModel.setProperty("/todoItemValidation/ItemStatus/ValueState","Error");
+        if (oTodoItem.ItemStatus === null) {
+          oViewModel.setProperty(
+            "/todoItemValidation/ItemStatus/ValueState",
+            "Error"
+          );
         }
-        if(oTodoItem.Username?.trim() === "" || oTodoItem.Username === null){
-            oViewModel.setProperty("/todoItemValidation/Username/ValueState","Error");
+        if (oTodoItem.Username?.trim() === "" || oTodoItem.Username === null) {
+          oViewModel.setProperty(
+            "/todoItemValidation/Username/ValueState",
+            "Error"
+          );
         }
-        if(oTodoItem.Category === null){
-            oViewModel.setProperty("/todoItemValidation/Category/ValueState","Error");
+        if (oTodoItem.Category === null) {
+          oViewModel.setProperty(
+            "/todoItemValidation/Category/ValueState",
+            "Error"
+          );
         }
 
         /* Form validation via code */
@@ -130,7 +145,7 @@ sap.ui.define(
         //           oField.setValueState("Error");
         //           oField.setValueStateText("Zorunlu alan");
         //         }
-        //       } 
+        //       }
         //     });
         //   });
         //   // const aFE = oFC.getFormElements() || [];
@@ -150,71 +165,82 @@ sap.ui.define(
         //     this._oAddItemDialog.close();
         // },2000);
       },
-      onDeleteTodo: function(oEvent){
+      onDeleteTodo: function (oEvent) {
         const oSource = oEvent.getSource();
         const oTodoItem = oSource?.getBindingContext()?.getObject();
 
-        if(!oTodoItem){
-            return;
+        if (!oTodoItem) {
+          return;
         }
 
-        const doDelete = ()=>{
-            Swal.fire({
-                position: "center",
-                icon: "success",
-                title: "Your work has been saved",
-                showConfirmButton: true,
-                timer: 2500
-              });
+        const doDelete = () => {
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Your work has been saved",
+            showConfirmButton: true,
+            timer: 2500,
+          });
         };
 
         this._callConfirmationDialog(
-            this.getText("DELETE_TODO_TITLE"),
-            this.getText("DELETE_TODO_TEXT", [oTodoItem.ItemDescription]),
-            this.getText("DELETE_ACTION"),
-            "Reject",
-            doDelete
-        )
-
-      }, 
+          this.getText("DELETE_TODO_TITLE"),
+          this.getText("DELETE_TODO_TEXT", [oTodoItem.ItemDescription]),
+          this.getText("DELETE_ACTION"),
+          "Reject",
+          doDelete
+        );
+      },
+      onRefreshList: function (oEvent) {
+        location.reload();
+        this.byId("idProjectList").getBinding("items").refresh();
+      },
 
       /** Event handlers */
-      _callConfirmationDialog: function(sTitle, sConfirmationText, sButtonText, sButtonType = "Accept", fnConfirmCallback){
+      _callConfirmationDialog: function (
+        sTitle,
+        sConfirmationText,
+        sButtonText,
+        sButtonType = "Accept",
+        fnConfirmCallback
+      ) {
         const oDialog = new Dialog({
-            contentWidth: "300px",
-            draggable: true,
-            title: sTitle,
-            content: [
-                new VBox({
-                    items:[
-                        new Text({
-                            text: sConfirmationText
-                        }).addStyleClass("sapUiTinyMarginBottom"),
-                        new Text({
-                            text: this.getText("DO_YOU_CONFIRM")
-                        })
-                    ]
-                })
-            ],
-            buttons: [
-                new Button({
-                    text:sButtonText,
-                    type:sButtonType,
-                    press: ()=>{
-                        oDialog.close();
-                        fnConfirmCallback && typeof fnConfirmCallback === "function" ? fnConfirmCallback() : null;
-                    }
+          contentWidth: "300px",
+          draggable: true,
+          title: sTitle,
+          content: [
+            new VBox({
+              items: [
+                new Text({
+                  text: sConfirmationText,
+                }).addStyleClass("sapUiTinyMarginBottom"),
+                new Text({
+                  text: this.getText("DO_YOU_CONFIRM"),
                 }),
-                new Button({
-                    text:this.getText("CANCEL_ACTION"),
-                    press: ()=>{
-                        oDialog.close();
-                    }
-                })
-            ],
-            afterClose: ()=>{
-                oDialog.destroy();
-            }  
+              ],
+            }),
+          ],
+          buttons: [
+            new Button({
+              text: sButtonText,
+              type: sButtonType,
+              press: () => {
+                oDialog.close();
+                fnConfirmCallback && typeof fnConfirmCallback === "function"
+                  ? fnConfirmCallback()
+                  : null;
+              },
+            }),
+            new Button({
+              text: this.getText("CANCEL_ACTION"),
+              press: () => {
+                oDialog.close();
+              },
+            }),
+          ],
+          afterClose: () => {
+            oDialog.destroy();
+          },
         }).addStyleClass("sapUiContentPadding");
 
         oDialog.open();
@@ -235,29 +261,39 @@ sap.ui.define(
       },
       _resetTodoItemValidation: function () {
         const oViewModel = this.getModel("detailViewModel");
-        oViewModel.setProperty("/todoItemValidation", this._initiateTodoItemValidation());
+        oViewModel.setProperty(
+          "/todoItemValidation",
+          this._initiateTodoItemValidation()
+        );
       },
       _initiateTodoItemValidation: function () {
         return {
-            ItemDescription:{
-                ValueState: sap.ui.core.ValueState.None,
-                ValueStateText: this.getText("FIELD_IS_OBLIGATORY", [this.getText("TODO_ITEM_DESCRIPTION")])   
-            },
-            ItemStatus:{
-                ValueState: sap.ui.core.ValueState.None,
-                ValueStateText: this.getText("FIELD_IS_OBLIGATORY", [this.getText("TODO_ITEM_STATUS")])   
-            },
-            Username:{
-                ValueState: sap.ui.core.ValueState.None,
-                ValueStateText: this.getText("FIELD_IS_OBLIGATORY", [this.getText("TODO_ITEM_USERNAME")])   
-            },
-            Category:{
-                ValueState: sap.ui.core.ValueState.None,
-                ValueStateText: this.getText("FIELD_IS_OBLIGATORY", [this.getText("TODO_ITEM_CATEGORY")])   
-            }
-          };
+          ItemDescription: {
+            ValueState: sap.ui.core.ValueState.None,
+            ValueStateText: this.getText("FIELD_IS_OBLIGATORY", [
+              this.getText("TODO_ITEM_DESCRIPTION"),
+            ]),
+          },
+          ItemStatus: {
+            ValueState: sap.ui.core.ValueState.None,
+            ValueStateText: this.getText("FIELD_IS_OBLIGATORY", [
+              this.getText("TODO_ITEM_STATUS"),
+            ]),
+          },
+          Username: {
+            ValueState: sap.ui.core.ValueState.None,
+            ValueStateText: this.getText("FIELD_IS_OBLIGATORY", [
+              this.getText("TODO_ITEM_USERNAME"),
+            ]),
+          },
+          Category: {
+            ValueState: sap.ui.core.ValueState.None,
+            ValueStateText: this.getText("FIELD_IS_OBLIGATORY", [
+              this.getText("TODO_ITEM_CATEGORY"),
+            ]),
+          },
+        };
       },
-
     });
   }
 );

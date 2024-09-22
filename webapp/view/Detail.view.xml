@@ -15,5 +15,17 @@
         <content>
             <core:Fragment fragmentName="com.smod.ux.todolist.fragments.TodoItemsTable"/>
         </content>
+
+        <footer>
+            <OverflowToolbar>
+                <ToolbarSpacer/>
+                <Button
+                    text="Refresh"
+                    icon="sap-icon://refresh"
+                    type="Emphasized"
+                    press=".onRefreshList"
+                />
+            </OverflowToolbar>
+        </footer>
     </Page>
 </mvc:View>
