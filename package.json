@@ -9,8 +9,8 @@
   ],
   "main": "webapp/index.html",
   "devDependencies": {
-    "@sap-ux/ui5-middleware-fe-mockserver": "^2.2.59",
-    "@sap/ux-ui5-tooling": "^1.14.5",
+    "@sap-ux/ui5-middleware-fe-mockserver": "^2.2.61",
+    "@sap/ux-ui5-tooling": "^1.15.0",
     "@ui5/cli": "^4.0.8"
   },
   "scripts": {
@@ -27,6 +27,7 @@
   },
   "sapuxLayer": "CUSTOMER_BASE",
   "dependencies": {
-    "rimraf": "^6.0.1"
+    "rimraf": "^6.0.1",
+    "todo-list": "file:"
   }
 }
